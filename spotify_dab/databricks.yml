@@ -1,0 +1,35 @@
+bundle:
+  name: spotify_dab
+  uuid: 48168935-6869-48bc-83ad-0ed83fc7d379
+
+variables:
+  catalog:
+    description: Catalog name
+
+  schema:
+    description: Schema name
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-7405616240127422.2.azuredatabricks.net
+    presets:
+      source_linked_deployment : false  
+      root_path: /Workspace/Users/dhivagar292000_gmail.com#ext#@dhivagar292000gmail.onmicrosoft.com/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: spotify_cata
+      schema: ${workspace.current_user.short_name}
+
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-7405616240127422.2.azuredatabricks.net
+      root_path: /Workspace/PROD/.bundle/${bundle.name}/${bundle.target}
+    variables:
+      catalog: spotify_cata
+      schema: prod
+    permissions:
+      - user_name: dhivagar292000_gmail.com#ext#@dhivagar292000gmail.onmicrosoft.com
+        level: CAN_MANAGE
